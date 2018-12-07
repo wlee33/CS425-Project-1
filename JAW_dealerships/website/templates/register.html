@@ -1,0 +1,14 @@
+{% extends "base2.html" %}
+
+{% block content %}
+
+<h1>Create Account:</h1>
+
+{{ message }}
+<form id="register_form" method="post" action="">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Create" />
+</form>
+
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends "base2.html" %}
+
+{% block content %}
+
+<h1>Login:</h1>
+
+{{ message }}
+<form id="login_form" method="post" action="">
+    {% csrf_token %}
+    {{ form }}
+    <input type="submit" value="Login" />
+</form>
+
+<style>
+.button {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 15px 25px;
+    text-align: center;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.button:hover {
+    background-color: green;
+}
+</style>
+<a href="/employee_login/">
+    <button class="button">Employee Login</button>
+</a>
+
+{% endblock %}

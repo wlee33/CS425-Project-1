@@ -1,0 +1,105 @@
+<!DOCTYPE html PUBLIC>
+<html lang="en">
+
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+
+        <!--Home-Header button of navbar -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#topNavBar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/home/">Jaw Dealerships</a>
+        </div>
+
+        <!--ITEMS: add login and logout with icons -->
+
+        <div class="collapse navbar-collapse" id="topNavBar">
+            <form class="navbar-form navbar-left" role="search" method="post" action="http://localhost:8000/search/">
+                {% csrf_token %}
+                <div class="form-group">
+                    <input type="text" class="form-control" name="searchquery" value="">
+
+                </div>
+                <button type="submit" class="btn btn-default">Search</button>
+            </form>
+
+            {% if username %}
+                {% if user_type == employee %}
+                    <ul class="nav navbar-nav navbar-left">
+                        <li class="">
+                            <a href="/edit_stock_info/">
+                                <span class="glyphicon glyphicon-book" aria-hidden="true"></span>&nbsp; Stock Info
+                            </a>
+                        </li>
+                    </ul>
+                {% endif %}
+                {% if user_type == 'customer' %}
+                    <ul class="nav navbar-nav navbar-left">
+                        <li class="">
+                            <a href="/purchase_history/">
+                                <span class="glyphicon glyphicon-book" aria-hidden="true"></span>&nbsp; Purchase History
+                            </a>
+                        </li>
+                    </ul>
+                {% endif %}
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="">
+                        <a href="/logout/">
+                            <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>&nbsp; Logout of {{ username }}
+                        </a>
+                    </li>
+                </ul>
+            {% else %}
+                 <ul class="nav navbar-nav navbar-right">
+                    <li class="">
+                        <a href="/register/">
+                            <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>&nbsp; Create Account
+                        </a>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="">
+                        <a href="/login/">
+                            <span class="glyphicon glyphicon-user" aria-hidden="true"></span>&nbsp; Login
+                        </a>
+                    </li>
+                </ul>
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</nav>
+
+<head>
+   {% load staticfiles %}
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+   <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}"/>
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+   <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+   <meta charset="utf-8">
+   <title>{% block title %}JAW Dealerships{% endblock %}</title>
+
+   <style type="text/css">
+       body {
+           text-align: left;
+       }
+   </style>
+
+</head>
+
+<body>
+
+   <div id="content">
+      {% block content %}The Content{% endblock %}
+   </div>
+
+</body>
+
+</html>

@@ -1,0 +1,18 @@
+{% extends "base2.html" %}
+
+{% block content %}
+<center>
+<h1>JAW Dealerships Homepage</h1>
+    {% if message %}
+        <p> {{ message }}</p>
+    {% endif %}
+    {% if username %}
+        <p> Welcome {{ username }}!</p>
+    {% else %}
+        <p> Welcome!</p>
+    {% endif %}
+    {% load static %}
+    <img src="{% static "images/img_home_car.jpg" %}" alt="Cool Car" style="width:1000px;height:600px;">
+</center>
+
+{% endblock %}
