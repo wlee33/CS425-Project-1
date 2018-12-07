@@ -90,10 +90,16 @@ def login(request):
         return render(request, 'login.html', {'message': 'email or password is incorrect', 'form': form})
 
 def employee_login(request):
+    db = mysql.connector.connect(user='dude', password='CS425',
+                                         host='Katie',
+                                         database='cars')
+    cursor = db.cursor()
     form = forms.employee_login_form()
     if (request.method == "GET"):
         if (request.COOKIES.get('auth', False)):
-            username = "get employee's name from sql query based on cookies"
+            cursor.execute(“Select name from Employee E where “ +  user_id + ” = E.employeeID”) 
+            results = cursor.fetchAll()
+            username = results[0]
             user_type = request.COOKIES['type']
             message = "you are already logged in"
             return render(request, 'employee_login.html', {'form': form, 'username': username, 'user_type': user_type, 'message': message})
@@ -289,7 +295,26 @@ def edit_account(request):
 
         #return succesfully updated
 
-
-
     else:
         return HttpResponse("login to view this page")
+    
+    def purchase_history(request):
+         db = mysql.connector.connect(user='dude', password='CS425',
+                                host='Katie',
+                                database='cars')
+         cursor = db.cursor(buffered=True)
+         if (request.method == "GET"):
+            if (request.COOKIES.get('auth', False)):
+                user_type = request.COOKIES['type']
+                username = request.COOKIES[‘auth’]
+                cursor.execute(“select saleID, name, date, amountPaid, vehicleID, brand, supplier, manufacturer, employeeID, dealershipID from sales natural join vehicle where name = ‘“+username+”’”)
+                result = cursor.fetchAll()
+                list = []
+                for i in range(0, len(result)):
+                    list.append(result[i])  
+                    
+                    
+         db.commit()
+         cursor.close()
+         db.close()
+
